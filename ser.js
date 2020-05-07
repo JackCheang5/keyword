@@ -15,8 +15,6 @@ app.use(upload.array());
 
 app.post('/audio', (req, res) => {
   console.log(req.body);
-  console.log(`f: ${req.file}`)
-  console.log(`fs: ${req.files}`)
   console.log(`${req.body.keyword}, ${req.body.audio}`);
 })
 

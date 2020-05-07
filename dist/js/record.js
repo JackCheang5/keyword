@@ -58,10 +58,6 @@ if (navigator.mediaDevices.getUserMedia) {
       console.log("recorder stopped");
 
       finish.onclick = function() {
-        console.log(blob);
-        console.log(clipName);
-        console.log(clipLabel.textContent);
-        
         const fd = new FormData();
         fd.append('keyword', clipLabel.textContent);
         fd.append('audio', 'testing');

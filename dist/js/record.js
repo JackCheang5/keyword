@@ -1,16 +1,10 @@
  // set up basic variables for app
 
 const record = document.querySelector('.record');
-const stop = document.querySelector('.stop');
 const soundClips = document.querySelector('.sound-clip');
 const canvas = document.querySelector('.visualizer');
 const mainSection = document.querySelector('.main-controls');
-
 const finish = document.querySelector('#ok');
-
-// disable stop button while not recording
-
-stop.disabled = true;
 
 // visualiser setup - create web audio api context and canvas
 
@@ -28,24 +22,22 @@ if (navigator.mediaDevices.getUserMedia) {
   let onSuccess = function(stream) {
     const mediaRecorder = new MediaRecorder(stream);
     visualize(stream);
+    let recording = false;
     record.onclick = function() {
-      mediaRecorder.start();
-      console.log(mediaRecorder.state);
-      console.log("recorder started");
-      record.style.background = "red";
-      stop.disabled = false;
-      record.disabled = true;
-      soundClips.innerHTML = '';
-    }
-
-    stop.onclick = function() {
-      mediaRecorder.stop();
-      console.log(mediaRecorder.state);
-      console.log("recorder stopped");
-      record.style.background = "";
-      record.style.color = "";
-      stop.disabled = true;
-      record.disabled = false;
+      if (recording == false) {
+        mediaRecorder.start();
+        console.log(mediaRecorder.state);
+        console.log("recorder started");
+        record.textContent = 'Stop'
+        soundClips.innerHTML = '';
+        recording = true;
+      } else {
+        mediaRecorder.stop();
+        console.log(mediaRecorder.state);
+        console.log("recorder stopped");
+        record.textContent = 'Record'
+        recording = false;
+      }
     }
 
     mediaRecorder.onstop = function(e) {
@@ -56,12 +48,12 @@ if (navigator.mediaDevices.getUserMedia) {
       const clipContainer = document.createElement('article');
       const clipLabel = document.createElement('p');
       const audio = document.createElement('audio');
-      const deleteButton = document.createElement('button');
+      //const deleteButton = document.createElement('button');
 
       clipContainer.classList.add('clip');
       audio.setAttribute('controls', '');
-      deleteButton.textContent = 'Delete';
-      deleteButton.className = 'delete';
+      //deleteButton.textContent = 'Delete';
+      //deleteButton.className = 'delete';
 
       if(clipName === null) {
         clipLabel.textContent = 'Untitled';
@@ -69,7 +61,7 @@ if (navigator.mediaDevices.getUserMedia) {
         clipLabel.textContent = clipName;
       }
       clipContainer.appendChild(clipLabel);
-      clipContainer.appendChild(deleteButton);
+      //clipContainer.appendChild(deleteButton);
       clipContainer.appendChild(audio);
       soundClips.appendChild(clipContainer);
 
@@ -91,10 +83,10 @@ if (navigator.mediaDevices.getUserMedia) {
         })
       }
 
-      deleteButton.onclick = function(e) {
+      /*deleteButton.onclick = function(e) {
         let evtTgt = e.target;
         evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
-      }
+      }*/
 
       clipLabel.onclick = function() {
         const existingName = clipLabel.textContent;

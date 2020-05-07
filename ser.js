@@ -4,11 +4,20 @@ const fs = require('fs');
 const app = express();
 const port = 5566;
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+var multer  = require('multer')
+var upload = multer()
 
-app.get('/audio', (req, res) => {
-  console.log(`${req.query.keyword}`);
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(upload.array());
+
+
+app.post('/audio', (req, res) => {
+  console.log(req.body);
+  console.log(`f: ${req.file}`)
+  console.log(`fs: ${req.files}`)
+  console.log(`${req.body.keyword}, ${req.body.audio}`);
 })
 
 app.use(express.static(`${__dirname}/dist`));

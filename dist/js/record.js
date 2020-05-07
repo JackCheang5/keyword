@@ -48,12 +48,9 @@ if (navigator.mediaDevices.getUserMedia) {
       const clipContainer = document.createElement('article');
       const clipLabel = document.createElement('p');
       const audio = document.createElement('audio');
-      //const deleteButton = document.createElement('button');
 
       clipContainer.classList.add('clip');
       audio.setAttribute('controls', '');
-      //deleteButton.textContent = 'Delete';
-      //deleteButton.className = 'delete';
 
       if(clipName === null) {
         clipLabel.textContent = 'Untitled';
@@ -61,7 +58,6 @@ if (navigator.mediaDevices.getUserMedia) {
         clipLabel.textContent = clipName;
       }
       clipContainer.appendChild(clipLabel);
-      //clipContainer.appendChild(deleteButton);
       clipContainer.appendChild(audio);
       soundClips.appendChild(clipContainer);
 
@@ -75,18 +71,19 @@ if (navigator.mediaDevices.getUserMedia) {
       finish.onclick = function() {
         console.log(blob);
         console.log(clipName);
+        console.log(clipLabel.textContent);
         
-        $.get('./audio', {
-          keyword: clipName,
-        }, (data) => {
-          ;
+        const fd = new FormData();
+        fd.append('keyword', clipLabel.textContent);
+        fd.append('audio', 'testing');
+        $.ajax({
+          type: 'POST',
+          url: './audio',
+          data: fd,
+          processData: false,
+          contentType: false,
         })
       }
-
-      /*deleteButton.onclick = function(e) {
-        let evtTgt = e.target;
-        evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
-      }*/
 
       clipLabel.onclick = function() {
         const existingName = clipLabel.textContent;

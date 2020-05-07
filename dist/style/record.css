@@ -1,0 +1,74 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
+
+#header {
+  width: 100%;
+  display: block;
+}
+#header h1 {
+  padding: 10px;
+  font-size: 40px;
+  display: inline-block;
+}
+#header button {
+  padding: 10px;
+  font-size: 35px;
+  float: right;
+}
+
+#mainContainer>form>div>label {
+  font-size: 30px;
+  margin-left: 40%;
+}
+#mainContainer>#buttons {
+  position: absolute;
+  top: 50%;
+  margin-left: 45%;
+}
+.visualizer{
+  margin-left: 40%;
+}
+
+.sound-clip {
+  flex: 1;
+  overflow: auto;
+}
+article {
+  display: block;
+  padding: 0;
+}
+
+.clip {
+  padding-bottom: 1rem;
+}
+
+audio {
+  width: 100%;
+  display: block;
+  margin: 1rem auto 0.5rem;
+}
+
+.clip p {
+  display: inline-block;
+  font-size: 2rem;
+}
+
+.clip button {
+  font-size: 1rem;
+  float: right;
+}
+
+button.delete {
+  background: #f00;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+}

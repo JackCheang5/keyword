@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Voice Memo
+    </title>
+    <link href="style/record.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  </head>
+
+  <body>
+    <div id="header">
+      <h1>New Keyword</h1>
+      <button id="ok">OK</button>
+      <hr>
+    </div>
+
+    <div id="mainContainer">
+
+      <canvas class="visualizer" height="60px"></canvas>
+
+      <div class="sound-clip">
+      </div>
+
+      <div id="buttons">
+        <button class="record">Record</button>
+        <button class="stop">Stop</button>
+      </div>
+      
+    </div>
+  </body>
+  <script src="js/record.js"></script>
+</html>

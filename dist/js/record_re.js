@@ -9,6 +9,7 @@ if (navigator.mediaDevices.getUserMedia) {
   function success(stream) {
     const mediaRecorder = new MediaRecorder(stream);
     let recording = false;
+    
     record.onclick = function() {
       if (recording == false) {
         mediaRecorder.start();
@@ -31,14 +32,11 @@ if (navigator.mediaDevices.getUserMedia) {
       const audio = document.createElement('audio');
       clipContainer.classList.add('clip');
       audio.setAttribute('conrtrols', '');
-
-      if (keyword === null) keyword = "Undefined";
+      if (keyword === null || keyword == '') clipLabel.textContent = "Undefined";
       else clipLabel.textContent = keyword;
-
       clipContainer.appendChild(clipLabel);
       clipContainer.appendChild(audio);
       soundClip.appendChild(clipContainer);
-
       audio.controls = true;
       const blob = new Blob(chunks, {'type' : 'audio/ogg; codecs=opus'});
       chunks = [];

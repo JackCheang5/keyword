@@ -12,8 +12,8 @@ const audio_path = './audio/'
 
 app.post('/audio', upload.single('audio'), (req, res) => {
   const save_path = `${audio_path}${randomName()}.ogg`;
-  console.log(req.body.keyword);
-  fs.writeFileSync(save_path, req.file.buffer, (err) => {
+  console.log('Data received')
+  fs.writeFile(save_path, req.file.buffer, (err) => {
     if (err) console.log(err);
     else console.log('Write compete');
   })

@@ -1,7 +1,6 @@
  // set up basic variables for app
 const record = document.querySelector('.record');
 const soundClips = document.querySelector('.sound-clip');
-const mainSection = document.querySelector('.main-controls');
 const finish = document.querySelector('#ok');
 //main block for doing the audio recording
 if (navigator.mediaDevices.getUserMedia) {

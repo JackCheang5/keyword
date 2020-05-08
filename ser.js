@@ -1,26 +1,25 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const multer  = require('multer');
+const upload = multer();
 const fs = require('fs');
+
+import { randomName } from './dist/js/misc.js';
+
 const app = express();
 const port = 5566;
 
-var multer  = require('multer')
-var upload = multer()
+const audio_path = './audio/'
 
-
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(upload.array());
-
-
-app.post('/audio', (req, res) => {
-  console.log(req.body);
-  //console.log(`${req.body.keyword}, ${req.body.audio}`);
+app.post('/audio', upload.single('audio'), (req, res) => {
+  const save_path = `${audio_path}${randomName()}.ogg`;
+  console.log(req.body.keyword);
+  fs.writeFileSync(save_path, req.file.buffer, (err) => {
+    if (err) console.log(err);
+    else console.log('Write compete');
+  })
 })
 
 app.use(express.static(`${__dirname}/dist`));
 
-app.listen(port, ()=> {
-  console.log(`listening on port: ${port}`);
-})
+app.listen(port, ()=> {console.log(`listening on port: ${port}`);})
 

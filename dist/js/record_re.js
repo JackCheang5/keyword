@@ -25,7 +25,7 @@ if (navigator.mediaDevices.getUserMedia) {
     }
 
     mediaRecorder.onstop = function() {
-      const keyword = prompt('Keyword:', 'Enter Here');
+      const keyword = prompt('Keyword:', 'Undefined');
       const clipContainer = document.createElement('article');
       const clipLabel = document.createElement('p');
       const audio = document.createElement('audio');
@@ -48,7 +48,7 @@ if (navigator.mediaDevices.getUserMedia) {
       clipLabel.onclick = function() {
         const existKeyword = clipLabel.textContent;
         const newKeyword = prompt('Change the keyword?');
-        if (newKeyword === null) clipLabel.textContent = existKeyword;
+        if (newKeyword == '') clipLabel.textContent = existKeyword;
         else clipLabel.textContent = newKeyword;
       }
 

@@ -15,7 +15,7 @@ app.use(upload.array());
 
 app.post('/audio', (req, res) => {
   console.log(req.body);
-  console.log(`${req.body.keyword}, ${req.body.audio}`);
+  //console.log(`${req.body.keyword}, ${req.body.audio}`);
 })
 
 app.use(express.static(`${__dirname}/dist`));

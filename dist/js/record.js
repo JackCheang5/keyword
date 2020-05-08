@@ -60,7 +60,7 @@ if (navigator.mediaDevices.getUserMedia) {
       finish.onclick = function() {
         const fd = new FormData();
         fd.append('keyword', clipLabel.textContent);
-        fd.append('audio', 'testing');
+        //fd.append('audio', blob);
         $.ajax({
           type: 'POST',
           url: './audio',

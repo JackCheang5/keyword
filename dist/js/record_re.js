@@ -60,7 +60,8 @@ if (navigator.mediaDevices.getUserMedia) {
           data: fd,
           processData: false,
           contentType: false,
-        })
+        });
+        location.href = "./list.html";
       }
     }
 

@@ -2,6 +2,7 @@ Vue.component('key-list', {
   props: {},
   template: `
     <div>
+      <button v-on:click="addKey">Add Keyword</button>
       <ol>
         <li v-for="(listItem, index)  in list" :key="listItem.id">
           {{ listItem.keyword }}
@@ -15,11 +16,15 @@ Vue.component('key-list', {
   data() {
     return {
       number: 0,
-      list: [ {id:'002', keyword:'nya', path:'asshole', seen: false} ],
+      list: [ {id:'002', keyword:'nya', path:'./audio/sth.ogg', seen: false} ],
       selectedItem: 0
     }
   },
   methods: {
+    addKey: function () {
+      window.location = "./record.html";
+    },
+
     show: function (index) {
       this.selectedItem = index;
       this.list[this.selectedItem].seen = !this.list[this.selectedItem].seen;
@@ -47,7 +52,27 @@ Vue.component('key-list', {
     },
 
     deleteItem: function(index) {
-      ;
+      $.ajax({
+        type: "GET",
+        url: "./deleteKey",
+        data: {
+          id: this.list[this.selectedItem].id
+        },
+      });
+
+      $.ajax({
+        type: "GET",
+        url: "./keyword",
+        data: '',
+        success: (result) => {
+          result.forEach(element => {
+            element.seen = false;
+          })
+          this.list = result;
+          console.log(this.list);
+        },
+        error: function () {console.log("failed");}
+      });
     }
   },
   mounted: function () {

@@ -18,10 +18,24 @@ let db = new sqlite3.Database('./db/test.db', (err) => {
 
 app.post('/audio', upload.single('audio'), (req, res) => {
   const save_path = `${audio_path}${randomName()}.ogg`;
-  console.log('Data received')
+  //console.log('Data received');
+  //console.log(req.body.keyword);
   fs.writeFile(save_path, req.file.buffer, (err) => {
     if (err) console.log(err);
-    else console.log('Write compete');
+  })
+  db.all('SELECT MAX(id) FROM audio', (err, max) => {
+    //console.log(max['0']['MAX(id)'] + 1);
+    let next_id;
+    if (max['0']['MAX(id)']==null || max['0']['MAX(id)']==undefined) {
+      next_id = 0;
+    } else next_id = max['0']['MAX(id)'] + 1;
+    let data = [next_id, req.body.keyword, save_path];
+    let sql = `INSERT INTO audio (id, keyword, path)
+                VALUES (?, ?, ?)`;
+    db.run(sql, data, (err) => {
+      if (err) return console.error(err.message);
+      //else console.log('new keyword added');
+    })
   })
 })
 
@@ -42,7 +56,20 @@ app.get('/changeKey', (req, res) => {
   db.run(sql, data, (err) => {
     if (err) return console.error(err.message);
   });
-  res.send('Keyword Changed');
+  //res.send('Keyword Changed');
+})
+
+app.get('/deleteKey', (req, res) => {
+  db.all(`SELECT Path FROM audio WHERE Id=?`, req.query.id, (err, path) => {
+    //console.log(path['0'].path);
+    fs.unlink(path['0'].path, (err) => {
+      if (err) console.error(err);
+    });
+  });
+  db.run(`DELETE FROM audio WHERE id=?`, req.query.id, (err) => {
+    if (err) return console.error(err.message);
+  });
+  res.send('deleted');
 })
 
 app.use(express.static(`${__dirname}/dist`));
